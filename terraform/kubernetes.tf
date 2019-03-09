@@ -4,24 +4,24 @@ provider "kubernetes" {
   config_path = "~/.kube/kubeconfig_nodeapp-cluster"
 }
 
-resource "kubernetes_namespace" "elk" {
-  metadata {
-    name = "elk"
-  }
+#resource "kubernetes_namespace" "elk" {
+#  metadata {
+#    name = "elk"
+#  }
 
-  depends_on = ["module.eks"]
-}
+#  depends_on = ["module.eks"]
+#}
 
-resource "kubernetes_namespace" "nodeapp" {
-  metadata {
-    name = "nodeapp"
-  }
-  depends_on = ["module.eks"]
-}
+#resource "kubernetes_namespace" "nodeapp" {
+#  metadata {
+#    name = "nodeapp"
+#  }
+#  depends_on = ["module.eks"]
+#}
 
 resource "kubernetes_deployment" "nodeapp-api" {
   metadata {
-    namespace = "nodeapp"
+#    namespace = "nodeapp"
     name = "nodeapp-api"
     labels {
       app = "nodeapp"
@@ -67,7 +67,7 @@ resource "kubernetes_deployment" "nodeapp-api" {
 
 resource "kubernetes_deployment" "nodeapp-web" {
   metadata {
-    namespace = "nodeapp"
+#    namespace = "nodeapp"
     name = "nodeapp-web"
     labels {
       app = "nodeapp"
@@ -117,7 +117,7 @@ resource "kubernetes_deployment" "nodeapp-web" {
 
 resource "kubernetes_service" "nodeapp-api-svc" {
   metadata {
-    namespace = "nodeapp"
+#    namespace = "nodeapp"
     name = "nodeapp-api-svc"
   }
   spec {
@@ -137,7 +137,7 @@ resource "kubernetes_service" "nodeapp-api-svc" {
 
 resource "kubernetes_service" "nodeapp-web-svc" {
   metadata {
-    namespace = "nodeapp"
+#    namespace = "nodeapp"
     name = "nodeapp-web-svc"
   }
   spec {
