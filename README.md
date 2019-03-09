@@ -13,7 +13,7 @@ https://github.com/terraform-aws-modules/terraform-aws-eks/tree/master/examples/
 
 ##### Workstation/control machine
 A VM or local laptop with the necessary tools to run the project.
-To install the required tools follow the steps below:
+To install the required tools on a Linux machine follow the steps below:
 
 1. Clone this repository on the control machine
 2. Execute */scripts/init_workstation.sh*
