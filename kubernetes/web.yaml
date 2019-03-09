@@ -1,0 +1,27 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: nodeapp-web
+  labels:
+     app: nodeapp
+     role: web
+spec:
+  replicas: 1 # tells deployment to run 2 pods matching the template
+  selector:
+    matchLabels:
+      app: nodeapp
+      role: web
+  template:
+    metadata:
+      labels:
+        app: nodeapp
+        role: web
+    spec:
+      containers:
+      - name: nodeapp-api
+        image: 049581233739.dkr.ecr.eu-central-1.amazonaws.com/nodeapprepo:webv1
+        env:
+            - name: API_HOST
+              value: "http://nodeapp-api-svc:3300"
+            - name: PORT
+              value: "80"

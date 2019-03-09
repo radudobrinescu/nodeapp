@@ -1,0 +1,27 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: nodeapp-api
+  labels:
+     app: nodeapp
+     role: api
+spec:
+  replicas: 2 # tells deployment to run 2 pods matching the template
+  selector:
+    matchLabels:
+      app: nodeapp
+      role: api
+  template:
+    metadata:
+      labels:
+        app: nodeapp
+        role: api
+    spec:
+      containers:
+      - name: nodeapp-api
+        image: 049581233739.dkr.ecr.eu-central-1.amazonaws.com/nodeapprepo:apiv1
+        env:
+            - name: DB
+              value: "postgres://nodeappadmin:nodeappadmin!@nodeappdb.csgfumxmknbk.eu-central-1.rds.amazonaws.com:5432/nodeappdb"
+        ports:
+        - containerPort: 3000
