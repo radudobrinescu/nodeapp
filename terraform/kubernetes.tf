@@ -21,6 +21,7 @@ resource "kubernetes_namespace" "nodeapp" {
 
 resource "kubernetes_deployment" "nodeapp-api" {
   metadata {
+    namespace = "nodeapp"
     name = "nodeapp-api"
     labels {
       app = "nodeapp"
@@ -52,7 +53,7 @@ resource "kubernetes_deployment" "nodeapp-api" {
           name  = "nodeapp-api"
           env {
              name = "DB"
-             value = "postgres://nodeappadmin:nodeappadmin!@${module.eks.cluster_endpoint}:5432/$nodeappdb"
+             value = "postgres://nodeappadmin:nodeappadmin!@${module.db.this_db_instance_endpoint}/nodeappdb"
 	  }
           port {
            container_port = 3000
@@ -66,6 +67,7 @@ resource "kubernetes_deployment" "nodeapp-api" {
 
 resource "kubernetes_deployment" "nodeapp-web" {
   metadata {
+    namespace = "nodeapp"
     name = "nodeapp-web"
     labels {
       app = "nodeapp"
@@ -98,6 +100,8 @@ resource "kubernetes_deployment" "nodeapp-web" {
           env {
               name  = "API_HOST"
               value = "http://nodeapp-api-svc:3300"
+              }
+          env {
               name  = "PORT"
               value = "80"
           }
@@ -113,6 +117,7 @@ resource "kubernetes_deployment" "nodeapp-web" {
 
 resource "kubernetes_service" "nodeapp-api-svc" {
   metadata {
+    namespace = "nodeapp"
     name = "nodeapp-api-svc"
   }
   spec {
@@ -132,11 +137,12 @@ resource "kubernetes_service" "nodeapp-api-svc" {
 
 resource "kubernetes_service" "nodeapp-web-svc" {
   metadata {
+    namespace = "nodeapp"
     name = "nodeapp-web-svc"
   }
   spec {
     selector {
-      app = "web"
+      role = "web"
     }
     #session_affinity = "ClientIP"
     port {
