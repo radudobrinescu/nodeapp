@@ -1,6 +1,8 @@
-## node-3tier-app
+# NodeJS 3tier App
 
-### Project prerequisites
+<placeholder for architecture diagram>
+
+## Project prerequisites
 
 ##### AWS Account:
 A non-administrative user with the following permissions is required:
@@ -19,7 +21,7 @@ To install the required tools on a Linux machine follow the steps below:
 2. Execute */scripts/init_workstation.sh*
 3. If you already have some of the tools installed, you can validate with */scripts/init_workstation.sh test*
 
-### Provision the infrastructure
+## Provision the infrastructure
 To provision the project's infrastructure in AWS, first set up the necessary terraform providers and then plan and apply the configurations:
 ```
 1. cd terraform
@@ -32,8 +34,8 @@ To clean up the environment:
 4. terraform destroy -var-file=variables.tfvars
 ```
 
-### Test the application
+## Test the application
 
 To make sure that the infrastructure has been provisioned and that the application properly deployed, simply get the Load Balancer endpoint from the *terraform apply* command output and enter the value in a browser. You should be able to see the application.
 
-### Updating the application
+## Updating the application
