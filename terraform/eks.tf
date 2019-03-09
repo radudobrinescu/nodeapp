@@ -52,6 +52,6 @@ resource "aws_ecr_repository" "nodeapprepo" {
   name = "nodeapprepo"
 
   provisioner "local-exec" {
-   	command = "export ECR_URL=${aws_ecr_repository.nodeapprepo.repository_url} && ../scripts/ecr_push.sh $ECR_URL"
+   	command = "export ECR_URL=${aws_ecr_repository.nodeapprepo.repository_url} && chmod +x ../scripts/ecr_push.sh && ../scripts/ecr_push.sh $ECR_URL"
 	}
 }

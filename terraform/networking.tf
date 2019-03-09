@@ -9,7 +9,7 @@ variable "web_subnet1_cidr_block" {}
 variable "web_subnet2_cidr_block" {}
 variable "web_subnet3_cidr_block" {}
 
-#locals { 
+#locals {
 #	public_subnet_tag name1 = "kubernetes.io/cluster/${var.cluster_name}"
 #	public_subnet_tag name2 = "kubernetes.io/role/elb"
 #}
@@ -110,4 +110,3 @@ resource "aws_security_group" "nodeapp_db_sg" {
     security_groups = ["${aws_security_group.nodeapp_app_sg.id}"]
   }
 }
-
