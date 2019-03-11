@@ -22,8 +22,6 @@ pipeline {
         }
         stage('Push') {
             steps {
-                sh 'curl -O https://bootstrap.pypa.io/get-pip.py && python get-pip.py --user && source ~/.bash_profile && pip install awscli --upgrade --user && export AWS_PROFILE="terraform"'
-                sh 'aws ecr get-login --no-include-email >> docker_login.sh && chmod +x docker_login.sh && source docker_login.sh && rm docker_login.sh'
                 sh 'docker push $API_IMAGE'
                 sh 'docker push $WEB_IMAGE'
             }
