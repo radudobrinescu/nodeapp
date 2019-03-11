@@ -13,6 +13,11 @@ pipeline {
                 echo 'Testing..'
             }
         }
+        stage('Push') {
+            steps {
+                echo $params.ecr_url
+            }
+        }
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
