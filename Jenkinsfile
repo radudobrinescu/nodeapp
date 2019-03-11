@@ -9,9 +9,11 @@ pipeline {
 
     stages {
        stage('Build') {
+            steps {
               sh 'docker build -f ./node-3tier-app/api/Dockerfile -t $API_IMAGE ./node-3tier-app/api'
               sh 'docker build -f ./node-3tier-app/web/Dockerfile -t $WEB_IMAGE ./node-3tier-app/web'
-              }
+            }
+       }
 
         stage('Test') {
             steps {
