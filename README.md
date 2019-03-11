@@ -1,6 +1,6 @@
 # NodeJS 3tier App
 
-<placeholder for architecture diagram> 
+<placeholder for architecture diagram> ..
 
 ## Project prerequisites
 
