@@ -5,5 +5,5 @@
 #}
 
 pipeline {
-  echo "Hello with jenkinsfile from scm "
+  echo "Hello with jenkinsfile from scm !"
   }
