@@ -22,6 +22,7 @@ pipeline {
         }
         stage('Push') {
             steps {
+                sh '/home/bitnami/nodeapp/scripts/docker_login.sh'
                 sh 'docker push $API_IMAGE'
                 sh 'docker push $WEB_IMAGE'
             }
