@@ -1,6 +1,5 @@
-pipeline {
-    agent any
-
+node {
+    
     environment {
              ECRURL = '049581233739.dkr.ecr.eu-central-1.amazonaws.com'
              API_IMAGE = "${ECRURL}/nodeapprepo:apiv2"
