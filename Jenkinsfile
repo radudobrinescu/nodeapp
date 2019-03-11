@@ -45,8 +45,7 @@ node{
 
         }
         stage('Deploy to EKS') {
-            steps {
-                echo 'Deploying....'
+                sh 'echo Deploying....'
             }
         }
     }
