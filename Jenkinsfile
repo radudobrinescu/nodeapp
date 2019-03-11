@@ -12,10 +12,10 @@ node {
           }
 
   stage('Test') {
-         steps{
-         sh 'echo "Whaaaat? Testing"'
-         }
-  }
+            steps {
+                echo 'Testing..'
+                  }
+                }
 
   stage 'Push'
   docker.withRegistry('https://'+$ECRURL, 'nodeapp_ecr_credentials') {
