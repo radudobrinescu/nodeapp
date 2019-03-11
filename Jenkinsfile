@@ -22,7 +22,9 @@ pipeline {
         }
         stage('Push') {
             steps {
-                sh 'echo ${params.ecr_url}'
+                sh 'aws ecr get-login --no-include-email >> docker_login.sh && chmod +x docker_login.sh && source docker_login.sh && rm docker_login.sh'
+                sh 'docker push $API_IMAGE'
+                sh 'docker push $WEB_IMAGE'
             }
         }
         stage('Deploy') {
