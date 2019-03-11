@@ -15,7 +15,7 @@ pipeline {
         }
         stage('Push') {
             steps {
-                sh 'echo ${params.region}'
+                sh 'echo ${params.ecr_url}'
             }
         }
         stage('Deploy') {
