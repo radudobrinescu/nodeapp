@@ -1,3 +1,3 @@
 pipeline {
-  echo "Hello new webhook"
+  echo "Hello new "
   }
