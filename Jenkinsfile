@@ -10,8 +10,7 @@ pipeline {
               sh 'docker build -f ./node-3tier-app/api/Dockerfile -t $ECRURL+'/nodeapprepo':apiv1 ./node-3tier-app/api'
               sh 'docker build -f ./node-3tier-app/web/Dockerfile -t $ECRURL+'/nodeapprepo':apiv1 ./node-3tier-app/web'
               }
-          }
-        }
+
         stage('Test') {
             steps {
                 echo 'Testing..'
