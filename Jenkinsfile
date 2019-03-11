@@ -47,6 +47,6 @@ node{
         stage('Deploy to EKS') {
                 sh 'echo Deploying....'
             }
-        }
+
     }
 }
