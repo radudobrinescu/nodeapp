@@ -8,7 +8,6 @@ node{
              WEB_IMAGE = "${ECRURL}/nodeapprepo:webv2"
     }
 
-    stages {
 
       stage('Install dependencies') {
         try {
@@ -48,5 +47,5 @@ node{
                 sh 'echo Deploying....'
             }
 
-    }
+
 }
