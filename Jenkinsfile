@@ -5,5 +5,5 @@ node {
 }
 
 pipeline {
-  echo "Hello new "
+  echo "Hello with jenkinsfile from scm "
   }
