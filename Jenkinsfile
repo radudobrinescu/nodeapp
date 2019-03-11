@@ -1,27 +1,16 @@
-pipeline {
-    agent any
+node {
 
-    stages {
-        stage('Build') {
-          steps {
-            sh 'docker build -f ./node-3tier-app/api/Dockerfile -t radudobrinescu/image:api ./node-3tier-app/api'
-            sh 'docker build -t radudobrinescu/image:web -f ./node-3tier-app/web/Dockerfile ./node-3tier-app/web'
-            }
-        }
-        stage('Test') {
-            steps {
-                echo 'Testing..'
-            }
-        }
-        stage('Push') {
-            steps {
-                sh 'echo ${params.ecr_url}'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
-            }
-        }
-    }
+  environment {
+             ECRURL = '049581233739.dkr.ecr.eu-central-1.amazonaws.com'
+  }
+
+  stage 'Docker build'
+  docker.build($ECRURL'/nodeapprepo:apiv1')
+  docker.build($ECRURL/nodeapprepo:webv1')
+
+  stage 'Docker push'
+  docker.withRegistry('https://049581233739.dkr.ecr.eu-central-1.amazonaws.com', 'nodeapp_ecr_credentials') {
+    docker.image('049581233739.dkr.ecr.eu-central-1.amazonaws.com/nodeapprepo').push('apiv1')
+    docker.image('049581233739.dkr.ecr.eu-central-1.amazonaws.com/nodeapprepo').push('webv1')
+  }
 }
