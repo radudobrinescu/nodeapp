@@ -68,9 +68,11 @@ pipeline{
             steps {
                 sh "export KUBECONFIG='${params.KUBECONFIG}'"
                 sh 'sed -i "s/{{API_TAG}}/$API_TAG/g" ./kubernetes/api.yaml'
-                sh 'kubectl apply -f ./kubernetes/api.yaml'
+                sh 'cat ./kubernetes/api.yaml'
+                /*sh 'kubectl apply -f ./kubernetes/api.yaml'*/
                 sh 'sed -i "s/{{WEB_TAG}}/$WEB_TAG/g" ./kubernetes/web.yaml'
-                sh 'kubectl apply -f ./kubernetes/web.yaml'
+                sh 'cat ./kubernete/web.yaml'
+                /*sh 'kubectl apply -f ./kubernetes/web.yaml'*/
                 
             }
         }
