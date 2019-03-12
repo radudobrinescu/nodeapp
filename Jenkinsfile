@@ -10,6 +10,7 @@ node{
 
      stage('Cloning Git') {
             git 'https://github.com/radudobrinescu/nodeapp'
+            credentialsId: 'radud-github-credentials'
         }
 
       stage('Install dependencies') {
