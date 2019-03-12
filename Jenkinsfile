@@ -66,8 +66,12 @@ pipeline{
         stage('Deploy to EKS') {
             steps {
                 sh "export KUBECONFIG='${params.KUBECONFIG}'"
-                sh 'cat ./kubernetes/api.yaml | sed -e "s/{{API_IMAGE}}/$API_IMAGE/g" |kubectl apply -f -'
-                sh 'cat ./kubernetes/web.yaml | sed -e "s/{{WEB_IMAGE}}/$WEB_IMAGE/g" |kubectl apply -f -'
+                sh 'sed -e "s/{{API_IMAGE}}/$API_IMAGE/g" ./kubernetes/api.yaml'
+                sh 'cat ./kubernetes/api.yaml'
+                sh 'kubectl apply -f ./kubernetes/api.yaml'
+                sh 'sed -e "s/{{WEB_IMAGE}}/$WEB_IMAGE/g" ./kubernetes/web.yaml'
+                sh 'cat ./kubernetes/api.yaml'
+                sh 'kubectl apply -f ./kubernetes/web.yaml'
                 
             }
         }
