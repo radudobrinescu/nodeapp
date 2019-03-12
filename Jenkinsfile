@@ -38,13 +38,9 @@ pipeline{
         }
         stage('Deploy to EKS') {
             steps {
-                /*sh "export KUBECONFIG='${params.KUBECONFIG}'"*/
                 sh 'sed -i "s/{{API_TAG}}/$API_TAG/g" ./kubernetes/api.yaml'
-                sh 'cat ./kubernetes/api.yaml'
-                sh "kubectl apply -f ./kubernetes/api.yaml --kubeconfig=/home/bitnami/kubeconfig"
                 sh 'sed -i "s/{{WEB_TAG}}/$WEB_TAG/g" ./kubernetes/web.yaml'
-                sh 'cat ./kubernetes/web.yaml'
-                /*sh 'kubectl apply -f ./kubernetes/web.yaml'*/
+                sh "kubectl apply -f ./kubernetes/ --kubeconfig=/home/bitnami/kubeconfig"
                 
             }
         }
