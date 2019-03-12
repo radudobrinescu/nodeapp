@@ -58,11 +58,6 @@ pipeline{
 
       stage('Push to ECR') {
           steps {
-                /*sh 'rm  ~/.dockercfg || true'
-                sh 'rm ~/.docker/config.json || true'
-                sh 'eval $(export AWS_PROFILE="terraform" && ~/.local/bin/aws ecr get-login --no-include-email)'
-                sh 'docker push $API_IMAGE'
-                sh 'docker push $WEB_IMAGE'*/
                 script {
                   docker.withRegistry("https://${params.ECRURL}", 'ecr:eu-central-1:ecr_cred') {
                     docker.image("$API_IMAGE").push()
@@ -73,7 +68,7 @@ pipeline{
         }
         stage('Deploy to EKS') {
             steps {
-                sh 'export KUBECONFIG=${params.KUBECONFIG}'
+                sh 'export KUBECONFIG="${params.KUBECONFIG}"'
                 sh "cat api.yaml | sed -e 's/{{API_IMAGE}}/$API_IMAGE/g' |kubectl apply -f -"
                 sh "cat web.yaml | sed -e 's/{{WEB_IMAGE}}/$WEB_IMAGE/g' |kubectl apply -f -"
             }
