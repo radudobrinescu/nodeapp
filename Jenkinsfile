@@ -2,9 +2,10 @@ pipeline{
   agent any
 
     environment {
-
-             API_IMAGE = "${params.ECRURL}/nodeapprepo:api-${BUILD_NUMBER}"
-             WEB_IMAGE = "${params.ECRURL}/nodeapprepo:web-${BUILD_NUMBER}"
+             API_TAG =  "api-${BUILD_NUMBER}"
+             WEB_TAG =  "web-${BUILD_NUMBER}"
+             API_IMAGE = "${params.ECRURL}/nodeapprepo:$API_TAG"
+             WEB_IMAGE = "${params.ECRURL}/nodeapprepo:$WEB_TAG"
     }
 /*
      stage('Cloning Git') {
@@ -66,10 +67,10 @@ pipeline{
         stage('Deploy to EKS') {
             steps {
                 sh "export KUBECONFIG='${params.KUBECONFIG}'"
-                sh 'sed -e "s/{{API_IMAGE}}/$API_IMAGE/g" ./kubernetes/api.yaml'
+                sh 'sed -e "s/{{API_TAG}}/$API_TAG/g" ./kubernetes/api.yaml'
                 sh 'cat ./kubernetes/api.yaml'
                 sh 'kubectl apply -f ./kubernetes/api.yaml'
-                sh 'sed -e "s/{{WEB_IMAGE}}/$WEB_IMAGE/g" ./kubernetes/web.yaml'
+                sh 'sed -e "s/{{WEB_TAG}}/$WEB_TAG/g" ./kubernetes/web.yaml'
                 sh 'cat ./kubernetes/api.yaml'
                 sh 'kubectl apply -f ./kubernetes/web.yaml'
                 
