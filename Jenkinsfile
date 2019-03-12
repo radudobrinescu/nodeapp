@@ -1,4 +1,5 @@
-node{
+pipeline{
+  agent any
 
     environment {
              ECRURL = '049581233739.dkr.ecr.eu-central-1.amazonaws.com'
@@ -38,21 +39,25 @@ node{
       */
 
       stage('Build Docker Image') {
+          steps {
               sh 'docker build -f ./node-3tier-app/api/Dockerfile -t $API_IMAGE ./node-3tier-app/api'
               sh 'docker build -f ./node-3tier-app/web/Dockerfile -t $WEB_IMAGE ./node-3tier-app/web'
+          }
        }
 
       stage('Push to ECR') {
+          steps {
                 sh '/home/tomcat/docker_login.sh'
                 sh 'docker push $API_IMAGE'
                 sh 'docker push $WEB_IMAGE'
-
+          }
         }
         stage('Deploy to EKS') {
+            steps {
                 sh "export KUBECONFIG=${params.KUBECONFIG}"
                 sh "kubectl create -f "
-
             }
+        }
 
 
 }
