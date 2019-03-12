@@ -9,9 +9,7 @@ node{
     }
 
      stage('Cloning Git') {
-          steps {
             git 'https://github.com/radudobrinescu/nodeapp'
-          }
         }
 
       stage('Install dependencies') {
