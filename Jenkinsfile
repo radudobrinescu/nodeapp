@@ -64,7 +64,7 @@ pipeline{
                 sh 'docker push $API_IMAGE'
                 sh 'docker push $WEB_IMAGE'*/
                 script {
-                  docker.withRegistry("https://${params.ECRURL}", "ecr:ecr_cred-EU_CENTRAL_1") {
+                  docker.withRegistry("https://${params.ECRURL}", 'ecr:eu-central-1:ecr_cred') {
                     docker.image("$API_IMAGE").push()
                     docker.image("${params.ECRURL}/nodeapprepo").push("web-${BUILD_NUMBER}")
                   }
