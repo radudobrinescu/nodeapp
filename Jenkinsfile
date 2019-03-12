@@ -61,7 +61,7 @@ pipeline{
                 /*sh 'eval $(export AWS_PROFILE="terraform" && aws ecr get-login --no-include-email)'
                 sh 'docker push $API_IMAGE'
                 sh 'docker push $WEB_IMAGE'*/
-                docker.withRegistry("https://${params.ECRURL}", "ecr:us-central-1:nodeapp_ecr_credentials") {
+                docker.withRegistry('https://${params.ECRURL}', 'ecr:us-central-1:nodeapp_ecr_credentials') {
                 docker.image("${params.ECRURL}/nodeapprepo").push("api-${BUILD_NUMBER}")
                 docker.image("${params.ECRURL}/nodeapprepo").push("web-${BUILD_NUMBER}")
           }
