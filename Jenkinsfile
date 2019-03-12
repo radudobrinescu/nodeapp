@@ -60,16 +60,16 @@ pipeline{
           steps {
                 sh 'rm  ~/.dockercfg || true'
                 sh 'rm ~/.docker/config.json || true'
-                sh 'eval $(which aws && export AWS_PROFILE="terraform" && ~/.local/bin/aws ecr get-login --no-include-email)'
+                /*sh 'eval $(export AWS_PROFILE="terraform" && ~/.local/bin/aws ecr get-login --no-include-email)'
                 sh 'docker push $API_IMAGE'
-                sh 'docker push $WEB_IMAGE'
-              /*script {
-                docker.withRegistry("https://${params.ECRURL}", "ecr:eu-central-1:ecr-credential") {
-                  docker.image("$API_IMAGE").push
-                  docker.image("${params.ECRURL}/nodeapprepo").push("web-${BUILD_NUMBER}")
-                }
-              } */
-          }
+                sh 'docker push $WEB_IMAGE'*/
+                script {
+                  docker.withRegistry("https://${params.ECRURL}", "nodeapp_ecr_credentials-EU_CENTRAL_1") {
+                    docker.image("$API_IMAGE").push
+                    docker.image("${params.ECRURL}/nodeapprepo").push("web-${BUILD_NUMBER}")
+                  }
+                } 
+            }
         }
         stage('Deploy to EKS') {
             steps {
