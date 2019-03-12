@@ -58,9 +58,9 @@ pipeline{
 
       stage('Push to ECR') {
           steps {
-                sh 'rm  ~/.dockercfg || true'
+                /*sh 'rm  ~/.dockercfg || true'
                 sh 'rm ~/.docker/config.json || true'
-                /*sh 'eval $(export AWS_PROFILE="terraform" && ~/.local/bin/aws ecr get-login --no-include-email)'
+                sh 'eval $(export AWS_PROFILE="terraform" && ~/.local/bin/aws ecr get-login --no-include-email)'
                 sh 'docker push $API_IMAGE'
                 sh 'docker push $WEB_IMAGE'*/
                 script {
