@@ -9,14 +9,14 @@ resource "kubernetes_namespace" "elk" {
     name = "elk"
   }
 
-  depends_on = ["module.eks"]
+#  depends_on = ["module.eks"]
 }
 
 resource "kubernetes_namespace" "nodeapp" {
   metadata {
     name = "nodeapp"
   }
-  depends_on = ["module.eks"]
+#  depends_on = ["module.eks"]
 }
 
 resource "kubernetes_deployment" "nodeapp-api" {
@@ -26,6 +26,7 @@ resource "kubernetes_deployment" "nodeapp-api" {
       app = "nodeapp"
       role = "api"
     }
+
   }
 
   spec {
@@ -48,7 +49,7 @@ resource "kubernetes_deployment" "nodeapp-api" {
 
       spec {
         container {
-          image = "049581233739.dkr.ecr.eu-central-1.amazonaws.com/nodeapprepo:apiv1"
+          image = "{{API_IMAGE}}"
           name  = "nodeapp-api"
           env {
              name = "DB"
@@ -61,7 +62,7 @@ resource "kubernetes_deployment" "nodeapp-api" {
         }
       }
     }
-  depends_on = ["module.eks"]
+  depends_on = "${kubernetes_namespace.nodeapp}"
 }
 
 resource "kubernetes_deployment" "nodeapp-web" {
@@ -93,7 +94,7 @@ resource "kubernetes_deployment" "nodeapp-web" {
 
       spec {
         container {
-          image = "049581233739.dkr.ecr.eu-central-1.amazonaws.com/nodeapprepo:webv1"
+          image = "{{WEB_IMAGE}}"
           name  = "nodeapp-web"
           env {
               name  = "API_HOST"
@@ -108,7 +109,7 @@ resource "kubernetes_deployment" "nodeapp-web" {
         }
       }
     }
-  depends_on = ["module.eks"]
+  depends_on = "${kubernetes_namespace.nodeapp}"
 }
 
 resource "kubernetes_service" "nodeapp-api-svc" {
@@ -127,7 +128,7 @@ resource "kubernetes_service" "nodeapp-api-svc" {
 
     type = "ClusterIP"
   }
-  depends_on = ["module.eks"]
+  depends_on = "${kubernetes_namespace.nodeapp}"
 }
 
 resource "kubernetes_service" "nodeapp-web-svc" {
@@ -146,5 +147,5 @@ resource "kubernetes_service" "nodeapp-web-svc" {
 
     type = "LoadBalancer"
   }
-  depends_on = ["module.eks"]
+  depends_on = "${kubernetes_namespace.nodeapp}"
 }
