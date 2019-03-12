@@ -37,7 +37,7 @@ pipeline{
         }
       }
       */
-
+  stages {
       stage('Build Docker Image') {
           steps {
               sh 'docker build -f ./node-3tier-app/api/Dockerfile -t $API_IMAGE ./node-3tier-app/api'
@@ -59,5 +59,5 @@ pipeline{
             }
         }
 
-
+    }
 }
