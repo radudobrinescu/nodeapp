@@ -7,35 +7,7 @@ pipeline{
              API_IMAGE = "${params.ECRURL}/nodeapprepo:$API_TAG"
              WEB_IMAGE = "${params.ECRURL}/nodeapprepo:$WEB_TAG"
     }
-/*
-     stage('Cloning Git') {
-            git 'https://github.com/radudobrinescu/nodeapp'
-            credentialsId: 'radud-github-credentials'
-        }
 
-      stage('Install dependencies') {
-        try {
-            sh 'npm install'
-            }
-        catch(e){
-            notify("Something failed while installing dependecies")
-            throw e;
-        }
-      }
-
-      stage('Run tests') {
-        try{
-          sh 'npm run test'
-              if (currentBuild.result.equals("FAILURE")) {
-              throw "Test results did not pass thresholds."
-              }
-          }
-        catch(e){
-            notify("Some tests failed")
-            throw e;
-        }
-      }
-      */
   stages {
 
       stage('Test') {
@@ -69,7 +41,7 @@ pipeline{
                 /*sh "export KUBECONFIG='${params.KUBECONFIG}'"*/
                 sh 'sed -i "s/{{API_TAG}}/$API_TAG/g" ./kubernetes/api.yaml'
                 sh 'cat ./kubernetes/api.yaml'
-                sh "export KUBECONFIG='${params.KUBECONFIG}' && kubectl apply -f ./kubernetes/api.yaml"
+                sh "kubectl apply -f ./kubernetes/api.yaml -kubeconfig=/home/bitnami/kubeconfig"
                 sh 'sed -i "s/{{WEB_TAG}}/$WEB_TAG/g" ./kubernetes/web.yaml'
                 sh 'cat ./kubernetes/web.yaml'
                 /*sh 'kubectl apply -f ./kubernetes/web.yaml'*/
