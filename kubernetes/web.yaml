@@ -18,7 +18,7 @@ spec:
         role: web
     spec:
       containers:
-      - name: nodeapp-api
+      - name: nodeapp-web
         image: 049581233739.dkr.ecr.eu-central-1.amazonaws.com/nodeapprepo:{{WEB_TAG}}
         env:
             - name: API_HOST
