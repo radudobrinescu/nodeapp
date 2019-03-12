@@ -3,10 +3,10 @@ pipeline{
 
     environment {
              ECRURL = '049581233739.dkr.ecr.eu-central-1.amazonaws.com'
-             RDSURL = 'nodeappdb.csgfumxmknbk.eu-central-1.rds.amazonaws.com:5432'
-             EKSURL = 'https://9F9CCB46ADCB3C751F4E3B2835285063.yl4.eu-central-1.eks.amazonaws.com'
-             API_IMAGE = "${ECRURL}/nodeapprepo:apiv2"
-             WEB_IMAGE = "${ECRURL}/nodeapprepo:webv2"
+             #RDSURL = 'nodeappdb.csgfumxmknbk.eu-central-1.rds.amazonaws.com:5432'
+             #EKSURL = 'https://9F9CCB46ADCB3C751F4E3B2835285063.yl4.eu-central-1.eks.amazonaws.com'
+             API_IMAGE = "${ECRURL}/nodeapprepo:api-${BUILD_NUMBER}"
+             WEB_IMAGE = "${ECRURL}/nodeapprepo:web-${BUILD_NUMBER}"
     }
 /*
      stage('Cloning Git') {
@@ -38,6 +38,16 @@ pipeline{
       }
       */
   stages {
+
+      stage('Test') {
+        steps{
+          sh 'npm install ./node-3tier-app/api'
+          sh 'npm install ./node-3tier-app/web'
+
+        }
+
+      }
+
       stage('Build Docker Image') {
           steps {
               sh 'docker build -f ./node-3tier-app/api/Dockerfile -t $API_IMAGE ./node-3tier-app/api'
@@ -55,7 +65,9 @@ pipeline{
         stage('Deploy to EKS') {
             steps {
                 sh "export KUBECONFIG=${params.KUBECONFIG}"
-                sh "kubectl create -f "
+                sh "build_manifests.sh ${RDSURL} ${API_IMAGE} ${WEB_IMAGE}"
+                sh 'cat api.yaml | sed -e 's/{{API_IMAGE}}/'"$API_IMAGE"'/g'' |kubectl apply -f -
+                sh 'cat web.yaml | sed -e 's/{{WEB_IMAGE}}/'"$WEB_IMAGE"'/g'' |kubectl apply -f -
             }
         }
 
