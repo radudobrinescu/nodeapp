@@ -8,6 +8,11 @@ node{
              WEB_IMAGE = "${ECRURL}/nodeapprepo:webv2"
     }
 
+     stage('Cloning Git') {
+          steps {
+            git 'https://github.com/radudobrinescu/nodeapp'
+          }
+        }
 
       stage('Install dependencies') {
         try {
