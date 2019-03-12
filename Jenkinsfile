@@ -65,8 +65,8 @@ pipeline{
                 docker.withRegistry("https://${params.ECRURL}", "ecr:eu-central-1:ecr-credential") {
                   docker.image("$API_IMAGE").push
                   docker.image("${params.ECRURL}/nodeapprepo").push("web-${BUILD_NUMBER}")
-                }*/
-              } 
+                }
+              } */
           }
         }
         stage('Deploy to EKS') {
