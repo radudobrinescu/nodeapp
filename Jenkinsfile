@@ -71,7 +71,7 @@ pipeline{
                 sh 'cat ./kubernetes/api.yaml'
                 /*sh 'kubectl apply -f ./kubernetes/api.yaml'*/
                 sh 'sed -i "s/{{WEB_TAG}}/$WEB_TAG/g" ./kubernetes/web.yaml'
-                sh 'cat ./kubernete/web.yaml'
+                sh 'cat ./kubernetes/web.yaml'
                 /*sh 'kubectl apply -f ./kubernetes/web.yaml'*/
                 
             }
