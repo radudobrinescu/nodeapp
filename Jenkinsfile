@@ -2,10 +2,7 @@ pipeline{
   agent any
 
     environment {
-/*             ECRURL = '049581233739.dkr.ecr.eu-central-1.amazonaws.com'
-             RDSURL = 'nodeappdb.csgfumxmknbk.eu-central-1.rds.amazonaws.com:5432'
-             EKSURL = 'https://9F9CCB46ADCB3C751F4E3B2835285063.yl4.eu-central-1.eks.amazonaws.com'
-*/
+
              API_IMAGE = "${params.ECRURL}/nodeapprepo:api-${BUILD_NUMBER}"
              WEB_IMAGE = "${params.ECRURL}/nodeapprepo:web-${BUILD_NUMBER}"
     }
@@ -69,8 +66,9 @@ pipeline{
         stage('Deploy to EKS') {
             steps {
                 sh "export KUBECONFIG='${params.KUBECONFIG}'"
-                /*sh 'cat api.yaml | sed -e "s/{{API_IMAGE}}/$API_IMAGE/g" |kubectl apply -f -'
-                sh 'cat web.yaml | sed -e "s/{{WEB_IMAGE}}/$WEB_IMAGE/g" |kubectl apply -f -'*/
+                sh 'cat ./kubernetes/api.yaml | sed -e "s/{{API_IMAGE}}/$API_IMAGE/g" |kubectl apply -f -'
+                sh 'cat ./kubernetes/web.yaml | sed -e "s/{{WEB_IMAGE}}/$WEB_IMAGE/g" |kubectl apply -f -'
+                
             }
         }
 
