@@ -7,7 +7,7 @@ node{
              API_IMAGE = "${ECRURL}/nodeapprepo:apiv2"
              WEB_IMAGE = "${ECRURL}/nodeapprepo:webv2"
     }
-
+/*
      stage('Cloning Git') {
             git 'https://github.com/radudobrinescu/nodeapp'
             credentialsId: 'radud-github-credentials'
@@ -35,6 +35,7 @@ node{
             throw e;
         }
       }
+      */
 
       stage('Build Docker Image') {
               sh 'docker build -f ./node-3tier-app/api/Dockerfile -t $API_IMAGE ./node-3tier-app/api'
@@ -48,7 +49,9 @@ node{
 
         }
         stage('Deploy to EKS') {
-                sh 'echo Deploying....'
+                sh "export KUBECONFIG=${params.KUBECONFIG}"
+                sh "kubectl create -f "
+
             }
 
 
