@@ -68,7 +68,7 @@ pipeline{
         }
         stage('Deploy to EKS') {
             steps {
-                sh 'export KUBECONFIG="${params.KUBECONFIG}"'
+                sh "export KUBECONFIG=$params.kubeconfig"
                 sh "cat api.yaml | sed -e 's/{{API_IMAGE}}/$API_IMAGE/g' |kubectl apply -f -"
                 sh "cat web.yaml | sed -e 's/{{WEB_IMAGE}}/$WEB_IMAGE/g' |kubectl apply -f -"
             }
