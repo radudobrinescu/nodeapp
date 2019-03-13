@@ -38,11 +38,11 @@ pipeline{
         }
         stage('Deploy to EKS') {
             steps {
-                container('kubectl') {
-                sh 'sed -i "s/{{API_TAG}}/$API_TAG/g" ./kubernetes/api.yaml'
-                sh 'sed -i "s/{{WEB_TAG}}/$WEB_TAG/g" ./kubernetes/web.yaml'
-                sh "kubectl apply -f ./kubernetes/api.yaml"
-                sh "kubectl apply -f ./kubernetes/web.yaml"
+                withCredentials([kubeconfigContent(credentialsId: '0a9c8cdc-10b3-4936-a872-7bad47a1c671', variable: 'KUBECONFIG_CONTENT')]) {
+                  sh 'sed -i "s/{{API_TAG}}/$API_TAG/g" ./kubernetes/api.yaml'
+                  sh 'sed -i "s/{{WEB_TAG}}/$WEB_TAG/g" ./kubernetes/web.yaml'
+                  sh 'kubectl apply -f ./kubernetes/api.yaml --kubeconfig="$KUBECONFIG_CONTENT"'
+                  sh 'kubectl apply -f ./kubernetes/web.yaml --kubeconfig="$KUBECONFIG_CONTENT"'
                 }
             }
         }
