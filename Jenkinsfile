@@ -38,11 +38,13 @@ pipeline{
         }
         stage('Deploy to EKS') {
             steps {
-                withKubeConfig([credentialsId: 'jenkins_service_account', serverUrl: 'https://63D7D154D926B163519962AADD9B5699.yl4.eu-central-1.eks.amazonaws.com']) {
-                  sh 'sed -i "s/{{API_TAG}}/$API_TAG/g" ./kubernetes/api.yaml'
-                  sh 'sed -i "s/{{WEB_TAG}}/$WEB_TAG/g" ./kubernetes/web.yaml'
-                  sh 'kubectl apply -f ./kubernetes/api.yaml'
-                  sh 'kubectl apply -f ./kubernetes/web.yaml'
+                script {
+                  withKubeConfig([credentialsId: 'jenkins_service_account', serverUrl: 'https://63D7D154D926B163519962AADD9B5699.yl4.eu-central-1.eks.amazonaws.com']) {
+                    sh 'sed -i "s/{{API_TAG}}/$API_TAG/g" ./kubernetes/api.yaml'
+                    sh 'sed -i "s/{{WEB_TAG}}/$WEB_TAG/g" ./kubernetes/web.yaml'
+                    sh 'kubectl apply -f ./kubernetes/api.yaml'
+                    sh 'kubectl apply -f ./kubernetes/web.yaml'
+                  }
                 }
             }
         }
