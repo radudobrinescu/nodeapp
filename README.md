@@ -38,7 +38,7 @@ To clean up the environment:
 
 To make sure that the infrastructure has been provisioned and that the application properly deployed, simply get the Load Balancer endpoint from the *terraform apply* command output and enter the value in a browser. You should be able to see the application. The current timestamp is retrieved from the database. 
 
-## Updating the application
+## Update the application
 
 One of the requirements of the project was to have an automatic way of updating the application code without any downtimes. We use a CI/CD Jenkins pipeline for this purpose.
 
@@ -55,7 +55,7 @@ Jenkins is running on a different infrastructure, so it is possible to reuse an 
 From the terraform apply output, get the server certificate:
 echo  certificate-authority-data | base64 --decode  -->> output goes in the
 
-<img src="docs/kubernetes_cloud.png" title="Kubernetes EKS" width=300>
+<img src="docs/kubernetes_cloud.png" title="Kubernetes EKS" width=500>
 
 On the workstation, retrieve the service account token:
 
@@ -64,11 +64,11 @@ kubectl describe secret $(kubectl get secrets | grep default | cut -f1 -d ' ') |
 ```
 Create/update credential 'default-service-account' as Secret text and enter the token value. 
 
-<img src="docs/service_account_credentials.JPG" title="Jenkins credential" width=300>
+<img src="docs/service_account_credentials.JPG" title="Jenkins credential" width=500>
 
 Now Jenkins will trigger the "3tier-nodeapp-toptal-pipeline" with every update of the application code. 
 
-<img src="docs/jenkins_pipeline.JPG" title="Jenkins pipeline" width=300>
+<img src="docs/jenkins_pipeline.JPG" title="Jenkins pipeline" width=500>
 
 
 
