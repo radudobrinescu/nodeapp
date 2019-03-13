@@ -62,7 +62,7 @@ resource "kubernetes_deployment" "nodeapp-api" {
         }
       }
     }
-  depends_on = "${kubernetes_namespace.nodeapp}"
+  #depends_on = ["${kubernetes_namespace.nodeapp}"]
 }
 
 resource "kubernetes_deployment" "nodeapp-web" {
@@ -109,7 +109,7 @@ resource "kubernetes_deployment" "nodeapp-web" {
         }
       }
     }
-  depends_on = "${kubernetes_namespace.nodeapp}"
+  #depends_on = ["${kubernetes_namespace.nodeapp}"]
 }
 
 resource "kubernetes_service" "nodeapp-api-svc" {
@@ -128,7 +128,7 @@ resource "kubernetes_service" "nodeapp-api-svc" {
 
     type = "ClusterIP"
   }
-  depends_on = "${kubernetes_namespace.nodeapp}"
+  #depends_on = ["${kubernetes_namespace.nodeapp}"]
 }
 
 resource "kubernetes_service" "nodeapp-web-svc" {
@@ -147,5 +147,5 @@ resource "kubernetes_service" "nodeapp-web-svc" {
 
     type = "LoadBalancer"
   }
-  depends_on = "${kubernetes_namespace.nodeapp}"
+  #depends_on = ["${kubernetes_namespace.nodeapp}"]
 }

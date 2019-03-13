@@ -1,6 +1,6 @@
 # NodeJS 3tier App
 
-<placeholder for architecture diagram> 
+![](docs/architecture_diagram.png "ArchitectureDiagram")
 
 ## Project prerequisites
 
@@ -39,3 +39,10 @@ To clean up the environment:
 To make sure that the infrastructure has been provisioned and that the application properly deployed, simply get the Load Balancer endpoint from the *terraform apply* command output and enter the value in a browser. You should be able to see the application.
 
 ## Updating the application
+
+Setup Jenkins for the pipeline:
+ECRURL and EKSURL parameters to the values output by terraform
+Update the Kubernetes cloud in the Jenkins general config:
+
+echo server_certificate_ca| base64 --decode
+get the default sa token and update the "default-service-account" credential
