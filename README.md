@@ -68,6 +68,9 @@ Create/update credential 'default-service-account' as Secret text and enter the 
 
 Now Jenkins will trigger the "3tier-nodeapp-toptal-pipeline" with every update of the application code. 
 
+<img src="docs/jenkins_pipeline.JPG" title="Jenkins pipeline" width=300>
+
+
 
 
 
