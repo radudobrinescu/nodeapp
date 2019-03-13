@@ -1,6 +1,6 @@
 # NodeJS 3tier App
 
-![](docs/architecture_diagram.png "ArchitectureDiagram")
+![](docs/architecture_diagram.jpg "ArchitectureDiagram")
 
 ## Project prerequisites
 
@@ -44,20 +44,31 @@ One of the requirements of the project was to have an automatic way of updating 
 
 Jenkins is running on a different infrastructure, so it is possible to reuse an existing installation of Jenkins. To set it up for this particular application:
 
-Two parameters are used in the pipeline and must be defined:
+
+#### 1. Set the below parameters used in the pipeline:
 
 - ECRURL - the URL of the Repository so Jenkins will know where to push the Docker images once they are built.
 - EKSURL - the URL of the EKS service where the application will be deployed
 
-In order to authenticate Jenkins to Kubernetes, a special plugin is used: https://wiki.jenkins.io/display/JENKINS/Kubernetes+Cli+Plugin
+#### 2. In order to authenticate Jenkins to Kubernetes, a special plugin is used: https://wiki.jenkins.io/display/JENKINS/Kubernetes+Cli+Plugin
 
 From the terraform apply output, get the server certificate:
 echo  certificate-authority-data | base64 --decode  -->> output goes in the
 
-![]image
+<img src="docs/kubernetes_cloud.png" title="Kubernetes EKS" width=300>
 
+On the workstation, retrieve the service account token:
+
+```
 kubectl describe secret $(kubectl get secrets | grep default | cut -f1 -d ' ') | grep -E '^token' | cut -f2 -d':' | tr -d '\t'
-
+```
 Create/update credential 'default-service-account' as Secret text and enter the token value. 
+
+<img src="docs/service_account_credentials.JPG" title="Jenkins credential" width=300>
+
+Now Jenkins will trigger the "3tier-nodeapp-toptal-pipeline" with every update of the application code. 
+
+
+
 
 
