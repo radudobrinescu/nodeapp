@@ -40,10 +40,10 @@ pipeline{
             steps {
                 script {
                   withKubeConfig([credentialsId: 'default-service-account', serverUrl: "${params.EKSURL}"]) {
-                    sh 'sed -i "s/{{API_TAG}}/$API_TAG/g" ./kubernetes/api.yaml'
-                    sh 'sed -i "s/{{WEB_TAG}}/$WEB_TAG/g" ./kubernetes/web.yaml'
-                    sh 'kubectl apply -f ./kubernetes/api.yaml'
-                    sh 'kubectl apply -f ./kubernetes/web.yaml'
+                    /*sh 'sed -i "s/{{API_TAG}}/$API_TAG/g" ./kubernetes/api.yaml'
+                    sh 'sed -i "s/{{WEB_TAG}}/$WEB_TAG/g" ./kubernetes/web.yaml'*/
+                    sh "kubectl --record deployment.apps/nodeapp-api set image deployment.v1.apps/nodeapp-api nodeapp-api=$API_IMAGE"
+                    sh "kubectl --record deployment.apps/nodeapp-web set image deployment.v1.apps/nodeapp-web nodeapp-web=$WEB_IMAGE"
                     /*sh 'kubectl apply -f ./kubernetes/web.yaml'*/
                   }
                 }
