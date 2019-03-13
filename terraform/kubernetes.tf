@@ -49,7 +49,7 @@ resource "kubernetes_deployment" "nodeapp-api" {
 
       spec {
         container {
-          image = "049581233739.dkr.ecr.eu-central-1.amazonaws.com/nodeapprepo:apiv1"
+          image = "${aws_ecr_repository.nodeapprepo.repository_url}:apiv1"
           name  = "nodeapp-api"
           env {
              name = "DB"
@@ -95,7 +95,7 @@ resource "kubernetes_deployment" "nodeapp-web" {
 
       spec {
         container {
-          image = "049581233739.dkr.ecr.eu-central-1.amazonaws.com/nodeapprepo:webv1"
+          image = "${aws_ecr_repository.nodeapprepo.repository_url}:webv1"
           name  = "nodeapp-web"
           env {
               name  = "API_HOST"
