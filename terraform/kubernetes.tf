@@ -1,9 +1,3 @@
- provisioner "local-exec" {
-      command = "sed -i 's/{{API_TAG}}/apiv1/g' ./kubernetes/api.yaml"
-      command = "sed -i 's/{{API_TAG}}/webv1/g' ./kubernetes/web.yaml"
-      }
-}
-
 provider "kubernetes" {
   config_context_auth_info = "nodeapp_kubeconfig"
   config_context_cluster   = "nodeapp_kubeconfig"
@@ -55,7 +49,7 @@ resource "kubernetes_deployment" "nodeapp-api" {
 
       spec {
         container {
-          image = "{{API_IMAGE}}"
+          image = "049581233739.dkr.ecr.eu-central-1.amazonaws.com/nodeapprepo:apiv1"
           name  = "nodeapp-api"
           env {
              name = "DB"
@@ -101,7 +95,7 @@ resource "kubernetes_deployment" "nodeapp-web" {
 
       spec {
         container {
-          image = "{{WEB_IMAGE}}"
+          image = "049581233739.dkr.ecr.eu-central-1.amazonaws.com/nodeapprepo:webv1"
           name  = "nodeapp-web"
           env {
               name  = "API_HOST"

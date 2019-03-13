@@ -36,13 +36,21 @@ To clean up the environment:
 
 ## Test the application
 
-To make sure that the infrastructure has been provisioned and that the application properly deployed, simply get the Load Balancer endpoint from the *terraform apply* command output and enter the value in a browser. You should be able to see the application.
+To make sure that the infrastructure has been provisioned and that the application properly deployed, simply get the Load Balancer endpoint from the *terraform apply* command output and enter the value in a browser. You should be able to see the application. The current timestamp is retrieved from the database. 
 
 ## Updating the application
 
-Setup Jenkins for the pipeline:
-ECRURL and EKSURL parameters to the values output by terraform
-Update the Kubernetes cloud in the Jenkins general config:
+One of the requirements of the project was to have an automatic way of updating the application code without any downtimes. We use a CI/CD Jenkins pipeline for this purpose.
+
+Jenkins is running on a different infrastructure, so it is possible to reuse an existing installation of Jenkins. To set it up for this particular application:
+
+Two parameters are used in the pipeline and must be defined:
+
+- ECRURL - the URL of the Repository so Jenkins will know where to push the Docker images once they are built.
+- EKSURL - the URL of the EKS service to deploy the application to
+
+In order to authenticate Jenkins to Kubernetes, a special plugin is used: https://wiki.jenkins.io/display/JENKINS/Kubernetes+Cli+Plugin
+
 
 echo server_certificate_ca| base64 --decode
 get the default sa token and update the "default-service-account" credential

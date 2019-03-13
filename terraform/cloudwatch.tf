@@ -1,7 +1,7 @@
 resource "aws_cloudwatch_dashboard" "main" {
   dashboard_name = "3tier-nodeapp-dashboard"
-
-{
+  dashboard_body = <<EOF
+  {
     "widgets": [
         {
             "type": "metric",
@@ -13,7 +13,7 @@ resource "aws_cloudwatch_dashboard" "main" {
                 "view": "timeSeries",
                 "stacked": false,
                 "metrics": [
-                    [ "AWS/RDS", "CPUUtilization", "DBInstanceIdentifier", "nodeappdb" ],
+                    [ "AWS/RDS", "CPUUtilization", "DBInstanceIdentifier", "${module.db.this_db_instance_name}" ],
                     [ ".", "DatabaseConnections", ".", "postgresdb" ]
                 ],
                 "region": "eu-central-1",
@@ -27,13 +27,15 @@ resource "aws_cloudwatch_dashboard" "main" {
             "width": 6,
             "height": 6,
             "properties": {
+                "metrics": [
+                    [ "AWS/ELB", "RequestCount", "Service", "ELB", { "stat": "Sum", "id": "m1" } ],
+                    [ ".", "BackendConnectionErrors", ".", ".", { "stat": "Sum", "id": "m2" } ],
+                    [ ".", "UnHealthyHostCount", ".", ".", { "stat": "SampleCount" } ]
+                ],
                 "view": "timeSeries",
                 "stacked": false,
-                "metrics": [
-                    [ "AWS/ELB", "RequestCount", "Service", "ELB", { "stat": "Sum" } ],
-                    [ ".", "BackendConnectionErrors", ".", ".", { "stat": "Sum" } ]
-                ],
-                "region": "eu-central-1"
+                "region": "eu-central-1",
+                "period": 300
             }
         },
         {
@@ -44,8 +46,7 @@ resource "aws_cloudwatch_dashboard" "main" {
             "height": 6,
             "properties": {
                 "metrics": [
-                    [ "AWS/EC2", "CPUUtilization", "AutoScalingGroupName", "${output.workers_asg_names}", { "visible": false } ],
-                    [ "...", "nodeapp-cluster-worker_nodes_group120190313143704286700000010" ],
+                    [ "AWS/EC2", "CPUUtilization", "AutoScalingGroupName", "${module.eks.workers_asg_names}" ],
                     [ ".", "DiskReadOps", ".", "." ],
                     [ ".", "DiskWriteOps", ".", "." ]
                 ],
@@ -56,4 +57,6 @@ resource "aws_cloudwatch_dashboard" "main" {
             }
         }
     ]
+}
+EOF
 }
