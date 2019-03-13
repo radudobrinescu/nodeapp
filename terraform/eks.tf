@@ -56,4 +56,4 @@ resource "aws_ecr_repository" "nodeapprepo" {
     command = "export KUBECONFIG=~/.kube/kubeconfig_nodeapp-cluster"
   }
 
- 
+}
