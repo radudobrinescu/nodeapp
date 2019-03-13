@@ -4,14 +4,6 @@ provider "kubernetes" {
   config_path = "~/.kube/kubeconfig_nodeapp-cluster"
 }
 
-resource "kubernetes_namespace" "elk" {
-  metadata {
-    name = "elk"
-  }
-
-#  depends_on = ["module.eks"]
-}
-
 resource "kubernetes_namespace" "nodeapp" {
   metadata {
     name = "nodeapp"
