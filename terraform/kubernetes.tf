@@ -1,3 +1,9 @@
+ provisioner "local-exec" {
+      command = "sed -i 's/{{API_TAG}}/apiv1/g' ./kubernetes/api.yaml"
+      command = "sed -i 's/{{API_TAG}}/webv1/g' ./kubernetes/web.yaml"
+      }
+}
+
 provider "kubernetes" {
   config_context_auth_info = "nodeapp_kubeconfig"
   config_context_cluster   = "nodeapp_kubeconfig"
@@ -53,7 +59,7 @@ resource "kubernetes_deployment" "nodeapp-api" {
           name  = "nodeapp-api"
           env {
              name = "DB"
-             value = "postgres://nodeappadmin:nodeappadmin!@${module.eks.cluster_endpoint}:5432/$nodeappdb"
+             value = "postgres://nodeappadmin:nodeappadmin!@${module.db.this_db_instance_endpoint}/$nodeappdb"
 	  }
           port {
            container_port = 3000
