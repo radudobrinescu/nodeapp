@@ -38,7 +38,7 @@ pipeline{
         }
         stage('Deploy to EKS') {
             steps {
-                withCredentials([kubeconfigContent(credentialsId: '0a9c8cdc-10b3-4936-a872-7bad47a1c671')]) {
+                withKubeConfig([credentialsId: 'jenkins_service_account', serverUrl: 'https://63D7D154D926B163519962AADD9B5699.yl4.eu-central-1.eks.amazonaws.com']) {
                   sh 'sed -i "s/{{API_TAG}}/$API_TAG/g" ./kubernetes/api.yaml'
                   sh 'sed -i "s/{{WEB_TAG}}/$WEB_TAG/g" ./kubernetes/web.yaml'
                   sh 'kubectl apply -f ./kubernetes/api.yaml'
