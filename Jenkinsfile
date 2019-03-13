@@ -33,6 +33,7 @@ pipeline{
                     docker.image("$API_IMAGE").push()
                     docker.image("$WEB_IMAGE").push()
                   }
+                sh "docker rmi $API_IMAGE $WEB_IMAGE"
                 } 
             }
         }
