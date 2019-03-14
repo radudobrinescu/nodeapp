@@ -70,6 +70,7 @@ Now Jenkins will trigger the "3tier-nodeapp-toptal-pipeline" with every update o
 
 <img src="docs/jenkins_pipeline.JPG" title="Jenkins pipeline" width=500>
 
+:-)
 
 
 
