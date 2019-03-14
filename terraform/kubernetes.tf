@@ -45,7 +45,7 @@ resource "kubernetes_deployment" "nodeapp-api" {
           name  = "nodeapp-api"
           env {
              name = "DB"
-             value = "postgres://nodeappadmin:nodeappadmin!@${module.db.this_db_instance_endpoint}/$nodeappdb"
+             value = "postgres://nodeappadmin:nodeappadmin!@${module.db.this_db_instance_endpoint}/nodeappdb"
 	  }
           port {
            container_port = 3000
@@ -92,6 +92,8 @@ resource "kubernetes_deployment" "nodeapp-web" {
           env {
               name  = "API_HOST"
               value = "http://nodeapp-api-svc:3300"
+          }
+          env {
               name  = "PORT"
               value = "80"
           }
