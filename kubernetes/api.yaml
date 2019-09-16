@@ -22,6 +22,6 @@ spec:
         image: 049581233739.dkr.ecr.eu-central-1.amazonaws.com/nodeapprepo:{{API_TAG}}
         env:
             - name: DB
-              value: "postgres://nodeappadmin:nodeappadmin!@nodeappdb.csgfumxmknbk.eu-central-1.rds.amazonaws.com:5432/nodeappdb"
+              value: "postgres://testuserdb:heartbeathealth@hr15psbwwbq6mmi.cj4cnpmwpa9z.us-east-1.rds.amazonaws.com:5432/testDB"
         ports:
         - containerPort: 3000

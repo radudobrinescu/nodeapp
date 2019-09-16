@@ -29,7 +29,7 @@ pipeline{
       stage('Push to ECR') {
           steps {
                 script {
-                  docker.withRegistry("https://${params.ECRURL}", 'ecr:eu-central-1:ecr_cred') {
+                  docker.withRegistry("https://${params.ECRURL}", 'ecr:us-east-1:ecr_cred') {
                     docker.image("$API_IMAGE").push()
                     docker.image("$WEB_IMAGE").push()
                   }
