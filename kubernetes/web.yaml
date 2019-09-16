@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: nodeapp-web
-        image: 744494341535.dkr.ecr.us-east-1.amazonaws.com/sample-app:{{WEB_TAG}}
+        image: 744494341535.dkr.ecr.us-east-1.amazonaws.com/nodeapprepo:{{WEB_TAG}}
         env:
             - name: API_HOST
               value: "http://nodeapp-api-svc:3300"
