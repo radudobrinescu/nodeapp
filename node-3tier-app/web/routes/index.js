@@ -18,7 +18,7 @@ router.get('/', function(req, res, next) {
         return res.status(500).send('error running request to ' + api_url);
       } else {
         res.render('index', {
-          title: '3tier App' ,
+          title: 'Sample EKS+RDS App' ,
           request_uuid: body.request_uuid,
           time: body.time
         });
